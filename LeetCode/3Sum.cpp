@@ -11,7 +11,7 @@
  * (-1, 0, 1)
  * (-1, -1, 2)
  *************************************************************/ 
-class Solution {
+class Solution { // 62ms
 public:
     vector<vector<int> > threeSum(vector<int> &num) {
         vector<vector<int> > result;
@@ -19,26 +19,25 @@ public:
 
         sort(num.begin(), num.end());
         auto last = num.end();
+        const int target = 0;
 
-        for (auto i = num.begin(); i != last; ++i) {
+        for (auto i = num.begin(); i < last - 2; ++i) {
             if (i != num.begin() && *i == *(i - 1)) 
                 continue;
             else if (*i > 0) break;
 
-            for (auto j = last - 1; j != i; --j) {
-                if (j != last - 1 && *j == *(j + 1))
-                    continue;
-                else if (*j < 0) break;
+            auto j = i + 1;
+            auto k = last - 1;
+            while (j < k) {
+                int tempSum = *i + *j + *k;
 
-                for (auto k = i + 1; k < j; ++k)
-                    if (*i + *j + *k == 0) {
-                        vector<int> vec;
-                        vec.push_back(*i);
-                        vec.push_back(*k);
-                        vec.push_back(*j);
-                        result.push_back(vec);
-                        break;
-                    }
+                if (tempSum == target) {
+                    result.push_back({*i, *j++, *k--});
+
+                    while (j < k && *j == *(j - 1)) ++j;
+                } else if (tempSum < target) {
+                    ++j;
+                } else --k;
             }
         }
 
