@@ -48,3 +48,41 @@ public:
         return result;
     }
 };
+
+// method 2:
+class Solution {
+public:
+    vector<vector<int> > fourSum(vector<int> &num, int target) {
+        vector<vector<int> > result;
+        if (num.size() < 4) return result;
+
+        sort(num.begin(), num.end());
+
+        unordered_map<int, vector<pair<int, int> > > hashTable;
+        for (int i = 0; i < num.size(); ++i) {
+            for (int j = i + 1; j < num.size(); ++j) {
+                hashTable[num[i] + num[j]].push_back(pair<int, int>{i, j});
+            }
+        }
+
+        for (int i = 0; i < num.size(); ++i) {
+            for (int j = i + 1; j < num.size(); ++j) {
+                const int key = target - num[i] - num[j];
+                if (hashTable.find(key) == hashTable.end())
+                    continue;
+
+                const auto vec = hashTable[key];
+                for (auto k: vec) {
+                    if (k.first <= j) continue;
+
+                    result.push_back({num[i], num[j], num[k.first], num[k.second]});
+                }
+            }
+        }
+
+        sort(result.begin(), result.end());
+        result.erase(unique(result.begin(), result.end()), result.end());
+
+        return result;
+    }
+};
