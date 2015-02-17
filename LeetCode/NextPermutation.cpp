@@ -17,18 +17,24 @@ class Solution {
 public:
     void nextPermutation(vector<int> &num) {
         int last = num.size();
-        if (last == 0) return;
+        if (last < 2) return;
 
         int index = last - 2;
         while (index >= 0 && num[index] >= num[index + 1])
             --index;
 
-        if (index == -1) sort(num.begin(), num.end());
+        if (index == -1) reserveSequence(num, 0, last - 1);
         else {
             int index2 = last - 1;
             while (num[index2] <= num[index]) --index2;
             swap(num[index2], num[index]);
-            sort(num.begin() + index + 1, num.end());
+            reserveSequence(num, index + 1, last - 1);
         }
+    }
+
+private:
+    void reserveSequence(vector<int>& num, int left, int right) {
+        while (left < right) 
+            swap(num[left++], num[right--]);
     }
 };
