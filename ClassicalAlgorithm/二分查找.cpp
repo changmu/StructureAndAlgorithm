@@ -1,3 +1,47 @@
+/*
+ * 二分各种情况总结
+ * */
+// 1> 准确找到值为K的任意一个位置，若没有则返回-1
+int binary_search(int k) {
+    // initialize
+    while (L < R) {
+        mid = L + R >> 1;
+        if (A[mid] < k)
+            L = mid + 1;
+        else (A[mid] > k)
+            R = mid;
+        else return L;
+    }
+
+    return -1;
+}
+
+// 2> 找到第一个>=k的位置，假设数组外界无穷大
+int lower_bound(int k) {
+    // initialize
+    while (L < R) {
+        mid = L + R >> 1;
+        if (A[mid] < k)
+            L = mid + 1;
+        else R = mid;
+    }
+
+    return L;
+}
+// 3> 找到第一个>k的位置，假设数组外界无穷大
+int upper_bound(int k) {
+    // initialize
+    while (L < R) {
+        mid = L + R >> 1;
+        if (A[mid] <= k)
+            L = mid + 1;
+        else R = mid;
+    }
+
+    return L;
+}
+
+
 /************************************************************* 
  * 排序 + 二分
  * 有N个数，取出里面每两个数的绝对值组合成m个绝对值，等价于
