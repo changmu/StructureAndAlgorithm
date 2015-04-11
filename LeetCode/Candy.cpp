@@ -1,6 +1,7 @@
 int max(int a, int b) { return a > b ? a : b; }
 
-int candy(int ratings[], int n) {
+int candy(int ratings[], int n) 
+{
 	int *count = (int *) malloc(sizeof(int) * n);
 	int i, cnt, result = n;
 	
