@@ -1,31 +1,26 @@
 /************************************************************* 
- * 输出一个字符串的全排列
+ * 杈撳嚭涓�涓瓧绗︿覆鐨勫叏鎺掑垪
  * Edit by changmu
  *************************************************************/ 
 
-void Permutation(char *pString)
+void PermutationImpl(char *begin_ptr, const char *ori_str)
 {
-	if (pString == NULL) return;
-	
-	Permutation(pString, pString);
+    if (*begin_ptr == '\0') {
+        printf("%s\n", ori_str);
+        return;
+    }
+
+    for (char *cur_ptr = begin_ptr; *cur_ptr != '\0'; cur_ptr++) {
+        swap(*cur_ptr, *begin_ptr);
+        PermutationImpl(begin_ptr + 1, ori_str);
+        swap(*cur_ptr, *begin_ptr);
+    }
 }
 
-void Permutation(char *pCurrent, const char *pString)
+void Permutation(char *str)
 {
-	if (*pCurrent == '\0') {
-		puts(pString);
-		return;
-	}
+    if (str == NULL || *str == '\0')
+        return;
 
-	for (char *pCh = pCurrent; *pCh != '\0'; ++pCh) {
-		char temp = *pCh;
-		*pCh = *pCurrent;
-		*pCurrent = temp;
-
-		Permutation(pCurrent + 1, pString);
-
-		temp = *pCh;
-		*pCh = *pCurrent;
-		*pCurrent = temp;
-	}
+    PermutationImpl(str, str);
 }
