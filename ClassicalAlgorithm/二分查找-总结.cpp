@@ -1,22 +1,23 @@
 /*
- * ¶ş·Ö¸÷ÖÖÇé¿ö×Ü½á
+ * äºŒåˆ†å„ç§æƒ…å†µæ€»ç»“
  * */
-// 1> ×¼È·ÕÒµ½ÖµÎªKµÄÈÎÒâÒ»¸öÎ»ÖÃ£¬ÈôÃ»ÓĞÔò·µ»Ø-1
-int binary_search(int k) {
-    // initialize
-    while (L < R) {
-        mid = L + R >> 1;
-        if (A[mid] < k)
-            L = mid + 1;
-        else (A[mid] > k)
-            R = mid;
-        else return L;
+// 1> å‡†ç¡®æ‰¾åˆ°å€¼ä¸ºKçš„ä»»æ„ä¸€ä¸ªä½ç½®ï¼Œè‹¥æ²¡æœ‰åˆ™è¿”å›-1
+int BinarySearch(int k, int arr[], int len) {
+    int left = 0, right = len;
+    while (left < right) {
+        int mid = (left + right) / 2;
+        if (arr[mid] < k)
+            left = mid + 1;
+        else (arr[mid] > k)
+            right = mid;
+        else
+            return mid;
     }
 
     return -1;
 }
 
-// 2> ÕÒµ½µÚÒ»¸ö>=kµÄÎ»ÖÃ£¬¼ÙÉèÊı×éÍâ½çÎŞÇî´ó
+// 2> æ‰¾åˆ°ç¬¬ä¸€ä¸ª>=kçš„ä½ç½®ï¼Œå‡è®¾æ•°ç»„å¤–ç•Œæ— ç©·å¤§
 int lower_bound(int k) {
     // initialize
     while (L < R) {
@@ -28,7 +29,7 @@ int lower_bound(int k) {
 
     return L;
 }
-// 3> ÕÒµ½µÚÒ»¸ö>kµÄÎ»ÖÃ£¬¼ÙÉèÊı×éÍâ½çÎŞÇî´ó
+// 3> æ‰¾åˆ°ç¬¬ä¸€ä¸ª>kçš„ä½ç½®ï¼Œå‡è®¾æ•°ç»„å¤–ç•Œæ— ç©·å¤§
 int upper_bound(int k) {
     // initialize
     while (L < R) {
@@ -43,9 +44,9 @@ int upper_bound(int k) {
 
 
 /************************************************************* 
- * ÅÅĞò + ¶ş·Ö
- * ÓĞN¸öÊı£¬È¡³öÀïÃæÃ¿Á½¸öÊıµÄ¾ø¶ÔÖµ×éºÏ³Ém¸ö¾ø¶ÔÖµ£¬µÈ¼ÛÓÚ
- * ÒÑÖªm¸öÊıÀïµÄ×î´óÖµºÍ×îĞ¡Öµ£¬ÕÒ³öµÚm/2Ğ¡¸öÊı.
+ * æ’åº + äºŒåˆ†
+ * æœ‰Nä¸ªæ•°ï¼Œå–å‡ºé‡Œé¢æ¯ä¸¤ä¸ªæ•°çš„ç»å¯¹å€¼ç»„åˆæˆmä¸ªç»å¯¹å€¼ï¼Œç­‰ä»·äº
+ * å·²çŸ¥mä¸ªæ•°é‡Œçš„æœ€å¤§å€¼å’Œæœ€å°å€¼ï¼Œæ‰¾å‡ºç¬¬m/2å°ä¸ªæ•°.
  *************************************************************/ 
 #include <stdio.h>
 #include <string.h>
@@ -69,7 +70,7 @@ void quick_sort(int *A, int L, int R) {
     quick_sort(A, L + 1, v);
 }
 
-int lower_bound(int *A, int N, int elem) {      // ·µ»Ø<=elemµÄÔªËØ¸öÊı
+int lower_bound(int *A, int N, int elem) {      // è¿”å›<=elemçš„å…ƒç´ ä¸ªæ•°
     int left = 0, right = N - 1, mid;
     while (left <= right) {
         mid = left + right >> 1;
@@ -103,7 +104,7 @@ int main() {
         left = 0;
         right = raw_number[N-1] - raw_number[0];
 
-        while (left <= right) {    // ¶ş·Ö´ğ°¸
+        while (left <= right) {    // äºŒåˆ†ç­”æ¡ˆ
             mid = left + right >> 1;
             if (binary_search_ans(raw_number, N, mid) < MID) {
                 left = mid + 1;
