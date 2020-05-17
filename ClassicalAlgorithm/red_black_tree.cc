@@ -12,6 +12,7 @@ using Value = std::string;
 	2.叶子节点为黑色
 	3.双红不连
 	4.任一节点到底部，黑高相等
+	5.不要有右红子节点，这个约束能简化代码
 */
 struct RedBlackTree
 {
@@ -20,7 +21,7 @@ struct RedBlackTree
 	{}
 
 	void insert(Key key, Value val) {
-		root_ = put(root_, key, val);
+		root_ = insertImpl(root_, key, val);
 		root_->color = BLACK; // 这里一定要放后面
 	}
 
@@ -79,20 +80,27 @@ private:
 		return 0;
 	}
 
+	// 翻转父子节点的颜色
 	static void flipColors(Node *h) {
 		h->color = RED;
 		h->left->color = BLACK;
 		h->right->color = BLACK;
 	}
 
-	Node *put(Node *h, Key key, Value val) {
+	/*
+		插入逻辑:
+		使用BST插入算法找到待插入叶节点
+		由下向上调整树结构: 左旋->右旋->变色
+		为了满足尽量多的红黑树性质，以红节点插入，然后通过染色和旋转调整
+	*/
+	Node *insertImpl(Node *h, Key key, Value val) {
 		if (h == NULL) {
 			return new Node(key, val, 1, RED);
 		}
 		// BST的插入逻辑
 		int cmp = compare(key, h->key);
-		if (cmp < 0) h->left = put(h->left, key, val);
-		else if (cmp > 0) h->right = put(h->right, key, val);
+		if (cmp < 0) h->left = insertImpl(h->left, key, val);
+		else if (cmp > 0) h->right = insertImpl(h->right, key, val);
 		else h->val = val; // 更新val
 		// 插入后开始调整结构，顺序不能颠倒
 		// 仅右红则左旋
